@@ -16,13 +16,8 @@
 
   <!-- 页面元数据 -->
   
-    <title>Pwnalbe.kr C1.fd WP - 192&#39;s blog</title>
+    <title>Pwnable 2 - 192&#39;s blog</title>
   
-    <meta name="keywords" content="pyenv">
-  
-  
-    <meta name="description" content="pyenv相关安装问题1. pyenv install 下载慢1. 代理命令行可以用proxychains-ng
-2.  ~/.pyenv/cache将要安装的版本的.gz包从官网下载之后放进~/.pyenv/cache再pyenv install就可以安装了">
   
 
   <!-- feed -->
@@ -367,8 +362,8 @@
         
   
     <h1 class="title">
-      <a href="/2020/04/09/pyenv%E7%9B%B8%E5%85%B3%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/">
-        Pwnalbe.kr C1.fd WP
+      <a href="/2020/04/09/Pwnable%202/">
+        Pwnable 2
       </a>
     </h1>
   
@@ -392,14 +387,6 @@
         
           
             
-  
-  <div class='new-meta-item category'>
-    <a href='/categories/config/' rel="nofollow">
-      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
-      <p>config</p>
-    </a>
-  </div>
-
 
           
         
@@ -429,15 +416,17 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h1 id="pyenv相关安装问题"><a href="#pyenv相关安装问题" class="headerlink" title="pyenv相关安装问题"></a>pyenv相关安装问题</h1><h2 id="1-pyenv-install-下载慢"><a href="#1-pyenv-install-下载慢" class="headerlink" title="1. pyenv install 下载慢"></a>1. pyenv install 下载慢</h2><h3 id="1-代理"><a href="#1-代理" class="headerlink" title="1. 代理"></a>1. 代理</h3><p>命令行可以用<strong><em>proxychains-ng</em></strong></p>
-<h3 id="2-pyenv-cache"><a href="#2-pyenv-cache" class="headerlink" title="2.  ~/.pyenv/cache"></a>2.  ~/.pyenv/cache</h3><p>将要安装的版本的.gz包从官网下载之后放进<code>~/.pyenv/cache</code>再pyenv install就可以安装了</p>
-<a id="more"></a>
+          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">title: Pwnalbe.kr C2.collision WP</span><br><span class="line">date: 2020-04-09 17:02:20</span><br><span class="line">tags: </span><br><span class="line">- pwnable.kr</span><br><span class="line">- fd</span><br><span class="line"></span><br><span class="line">categories:</span><br><span class="line"></span><br><span class="line">- PWN</span><br></pre></td></tr></table></figure>
+
+<h1 id="Pwnalbe-kr-C2-collision-WP"><a href="#Pwnalbe-kr-C2-collision-WP" class="headerlink" title="Pwnalbe.kr C2.collision WP"></a>Pwnalbe.kr C2.collision WP</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">check_password</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>* ip = (<span class="keyword">int</span>*)p;</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"usage : %s [passcode]\n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"passcode length should be 20 bytes\n"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;</span><br><span class="line">                system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"wrong passcode.\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码如上</p>
+<p>核心思路就是要一个五个字符的passcode。Sum[passcode] = 0x21DD09EC</p>
+<p>那么就直接构造4个小的最后再用合减去就有了第五个字符。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./col `python -c <span class="string">"print('\x01\x01\x01\x01'*4+'\xe8\x05\xd9\x1d')"</span>`</span></span><br></pre></td></tr></table></figure>
 
 
-
-<h2 id="2-依赖"><a href="#2-依赖" class="headerlink" title="2. 依赖"></a>2. 依赖</h2><h3 id="ubuntu"><a href="#ubuntu" class="headerlink" title="ubuntu"></a>ubuntu</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install make build-essential libssl-dev zlib1g-dev</span><br><span class="line">sudo apt-get install libbz2-dev libreadline-dev libsqlite3-dev wget curl</span><br><span class="line">sudo apt-get install llvm libncurses5-dev libncursesw5-dev</span><br></pre></td></tr></table></figure>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
           
             <br>
             
@@ -463,9 +452,6 @@
       
         
           
-  
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/pyenv/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>pyenv</p></a></div>
-
 
         
       
@@ -482,8 +468,7 @@
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/04/09/pyenv%E7%9B%B8%E5%85%B3%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/&title=Pwnalbe.kr C1.fd WP - 192's blog&summary=pyenv相关安装问题1. pyenv install 下载慢1. 代理命令行可以用proxychains-ng
-2.  ~/.pyenv/cache将要安装的版本的.gz包从官网下载之后放进~/.pyenv/cache再pyenv install就可以安装了"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/04/09/Pwnable%202/&title=Pwnable 2 - 192's blog&summary="
           
           >
           
@@ -495,8 +480,7 @@
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2020/04/09/pyenv%E7%9B%B8%E5%85%B3%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/&title=Pwnalbe.kr C1.fd WP - 192's blog&summary=pyenv相关安装问题1. pyenv install 下载慢1. 代理命令行可以用proxychains-ng
-2.  ~/.pyenv/cache将要安装的版本的.gz包从官网下载之后放进~/.pyenv/cache再pyenv install就可以安装了"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2020/04/09/Pwnable%202/&title=Pwnable 2 - 192's blog&summary="
           
           >
           
@@ -508,8 +492,7 @@
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/04/09/pyenv%E7%9B%B8%E5%85%B3%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/&title=Pwnalbe.kr C1.fd WP - 192's blog&summary=pyenv相关安装问题1. pyenv install 下载慢1. 代理命令行可以用proxychains-ng
-2.  ~/.pyenv/cache将要安装的版本的.gz包从官网下载之后放进~/.pyenv/cache再pyenv install就可以安装了"
+          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/04/09/Pwnable%202/&title=Pwnable 2 - 192's blog&summary="
           
           >
           
@@ -533,8 +516,9 @@
         
           <div class="prev-next">
             
-              <a class='prev' href='/2020/04/09/Pwnable%20fd/'>
-                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Pwnalbe.kr C1.fd WP</p>
+            
+              <a class='next' href='/2020/04/09/Pwnable%20fd/'>
+                <p class='title'>Pwnalbe.kr C1.fd WP<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
                 <p class='content'>Pwnalbe.kr C1.fd WP
 
 
@@ -543,7 +527,6 @@
 
 123456789101112131415161718192021#include &lt;stdio.h&gt;#include &lt;st...</p>
               </a>
-            
             
           </div>
         
@@ -570,7 +553,7 @@
 
   <script>
     window.subData = {
-      title: 'Pwnalbe.kr C1.fd WP',
+      title: 'Pwnable 2',
       tools: true
     }
   </script>
@@ -596,7 +579,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-pyenv-install-下载慢"><span class="toc-text">1. pyenv install 下载慢</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-代理"><span class="toc-text">1. 代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-pyenv-cache"><span class="toc-text">2.  ~&#x2F;.pyenv&#x2F;cache</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-依赖"><span class="toc-text">2. 依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ubuntu"><span class="toc-text">ubuntu</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-text"></span></a></li></ol></li></ol>
+      
     </div>
   </section>
 
