@@ -16,6 +16,12 @@
 .shadow.floatable:hover {
   box-shadow: 0 2px 4px 0px rgba(0,0,0,0.1), 0 4px 8px 0px rgba(0,0,0,0.1), 0 8px 16px 0px rgba(0,0,0,0.1);
 }
+@font-face {
+  font-family: 'Varela Round';
+  src: url("https://cdn.jsdelivr.net/gh/xaoxuu/cdn-fonts/VarelaRound/VarelaRound-Regular.ttf");
+  font-weight: 'normal';
+  font-style: 'normal';
+}
 * {
   box-sizing: border-box;
   outline: none;
@@ -26,7 +32,7 @@ html {
   color: #444;
   width: 100%;
   height: 100%;
-  font-family: "Microsoft YaHei", "Source Sans Pro", "Helvetica Neue", Menlo, Monaco, monospace, "Lucida Console", sans-serif, Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", Source Han Sans CN Regular, WenQuanYi Micro Hei, Arial, sans-serif;
+  font-family: 'Varela Round', "Microsoft YaHei", "Source Sans Pro", "Helvetica Neue", Menlo, Monaco, monospace, "Lucida Console", sans-serif, Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", Source Han Sans CN Regular, WenQuanYi Micro Hei, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
@@ -1076,6 +1082,51 @@ div.tabs .tab-content .tab-pane.active {
   font-size: 0.75rem;
   padding: 4px 8px;
 }
+.highlight.html .code:before {
+  content: "HTML";
+}
+.highlight.js .code:before {
+  content: "JS";
+}
+.highlight.bash .code:before {
+  content: "bash";
+}
+.highlight.shell .code:before {
+  content: "shell";
+}
+.highlight.css .code:before {
+  content: "css";
+}
+.highlight.less .code:before {
+  content: "less";
+}
+.highlight.stylus .code:before {
+  content: "stylus";
+}
+.highlight.swift .code:before {
+  content: "Swift";
+}
+.highlight.objc .code:before {
+  content: "ObjC";
+}
+.highlight.c .code:before {
+  content: "C";
+}
+.highlight.cpp .code:before {
+  content: "C++";
+}
+.highlight.java .code:before {
+  content: "Java";
+}
+.highlight.python .code:before {
+  content: "Python";
+}
+.highlight.yaml .code:before {
+  content: "YAML";
+}
+.highlight.plain .code:before {
+  content: "";
+}
 pre .line {
   color: rgba(68,68,68,0.9);
 }
@@ -1181,6 +1232,45 @@ pre .coffeescript .title {
 .alert.alert-danger {
   color: #ef0b01;
   background-color: #fff;
+}
+.highlight {
+  position: relative;
+}
+.btn-copy {
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-appearance: none;
+  font-size: calc(0.8125rem - 1px);
+  font-weight: bold;
+  padding: 4px 8px;
+  color: rgba(68,68,68,0.65);
+  background: #fff;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 4px;
+  box-shadow: 0 1px 2px 0px rgba(0,0,0,0.1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transition: all 0.28s ease;
+  -moz-transition: all 0.28s ease;
+  -webkit-transition: all 0.28s ease;
+  -o-transition: all 0.28s ease;
+}
+.btn-copy >i {
+  margin-right: 4px;
+}
+.btn-copy:hover {
+  color: #ff5722;
+  background: #ffeee8;
+}
+.highlight:hover .btn-copy {
+  opacity: 1;
 }
 div.fancybox {
   margin: 1rem 0;
@@ -1313,7 +1403,7 @@ div.fancybox.stretch>p img {
 .l_main #comments #valine_container button {
   border: none;
   padding: 9px 2rem 7px 2rem;
-  border-radius: 2px;
+  border-radius: 4px;
   background: #f1f1f1;
   color: #444;
   transition: all 0.28s ease;
@@ -2898,7 +2988,7 @@ div.hoverbox:hover >div.target {
   text-overflow: ellipsis;
   padding: 0 24px;
   font-size: 1.25rem;
-  font-family: "Microsoft YaHei", "Source Sans Pro", "Helvetica Neue", Menlo, Monaco, monospace, "Lucida Console", sans-serif, Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", Source Han Sans CN Regular, WenQuanYi Micro Hei, Arial, sans-serif;
+  font-family: 'Varela Round', "Microsoft YaHei", "Source Sans Pro", "Helvetica Neue", Menlo, Monaco, monospace, "Lucida Console", sans-serif, Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", Source Han Sans CN Regular, WenQuanYi Micro Hei, Arial, sans-serif;
   flex-shrink: 0;
   letter-spacing: 0;
 }
@@ -2927,7 +3017,7 @@ div.hoverbox:hover >div.target {
 }
 .l_header .nav-sub .logo {
   font-size: 1rem;
-  font-family: "Microsoft YaHei", "Source Sans Pro", "Helvetica Neue", Menlo, Monaco, monospace, "Lucida Console", sans-serif, Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", Source Han Sans CN Regular, WenQuanYi Micro Hei, Arial, sans-serif;
+  font-family: 'Varela Round', "Microsoft YaHei", "Source Sans Pro", "Helvetica Neue", Menlo, Monaco, monospace, "Lucida Console", sans-serif, Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", Source Han Sans CN Regular, WenQuanYi Micro Hei, Arial, sans-serif;
   flex-shrink: 1;
 }
 @media screen and (max-width: 500px) {
@@ -3243,17 +3333,21 @@ div.hoverbox:hover >div.target {
     width: calc(100% - 112px);
   }
 }
-.l_header .wrapper a.logo {
-  margin-right: auto;
+.l_header .wrapper {
+  max-width: 1080px;
+  margin: auto;
 }
-.l_header .wrapper .m_search {
-  margin-right: 16px;
+@media screen and (min-width: 2000px) {
+  .l_header .wrapper {
+    max-width: 55vw;
+  }
 }
-.l_header .wrapper .menu li ul.submenu {
-  right: 0;
+.l_header .wrapper .menu {
+  flex: 1 1 auto;
+  margin: 0 16px 0 0;
 }
-.l_header .wrapper .menu li ul.submenu ul {
-  right: calc(100% - 0.5 * 16px);
+.l_header .wrapper .menu .submenu ul {
+  left: calc(100% - 0.5 * 16px);
 }
 ul.menu-phone {
   display: none;
@@ -4093,7 +4187,7 @@ ul.menu-phone >li>a.active {
   max-width: 500px;
   border-radius: 4px;
   color: #444;
-  font-family: "Microsoft YaHei", "Source Sans Pro", "Helvetica Neue", Menlo, Monaco, monospace, "Lucida Console", sans-serif, Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", Source Han Sans CN Regular, WenQuanYi Micro Hei, Arial, sans-serif;
+  font-family: 'Varela Round', "Microsoft YaHei", "Source Sans Pro", "Helvetica Neue", Menlo, Monaco, monospace, "Lucida Console", sans-serif, Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", Source Han Sans CN Regular, WenQuanYi Micro Hei, Arial, sans-serif;
 }
 .aplayer .aplayer-list {
   text-align: left;
