@@ -16,7 +16,9 @@
 
   <!-- 页面元数据 -->
   
-    <title>Pwnable fd - 192&#39;s blog</title>
+    <title>Pwnalbe.kr C1.fd WP - 192&#39;s blog</title>
+  
+    <meta name="keywords" content="pwnable.kr,File Describor">
   
   
 
@@ -351,7 +353,7 @@
   
     <h1 class="title">
       <a href="/2020/04/09/Pwnable%20fd/">
-        Pwnable fd
+        Pwnalbe.kr C1.fd WP
       </a>
     </h1>
   
@@ -375,6 +377,14 @@
         
           
             
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/PWN/' rel="nofollow">
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <p>PWN</p>
+    </a>
+  </div>
+
 
           
         
@@ -404,17 +414,7 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <p>-–<br>title: Pwnalbe.kr C1.fd WP<br>date: 2020-04-09 17:02:20<br>tags: </p>
-<ul>
-<li>pwnable.kr</li>
-<li>File Describor</li>
-</ul>
-<p>categories:</p>
-<ul>
-<li>PWN</li>
-</ul>
-<p>-–</p>
-<h1 id="Pwnalbe-kr-C1-fd-WP"><a href="#Pwnalbe-kr-C1-fd-WP" class="headerlink" title="Pwnalbe.kr C1.fd WP"></a>Pwnalbe.kr C1.fd WP</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">char</span> buf[<span class="number">32</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[], <span class="keyword">char</span>* envp[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"pass argv[1] a number\n"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> fd = atoi( argv[<span class="number">1</span>] ) - <span class="number">0x1234</span>;</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">        len = <span class="built_in">read</span>(fd, buf, <span class="number">32</span>);</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(<span class="string">"LETMEWIN\n"</span>, buf))&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"good job :)\n"</span>);</span><br><span class="line">                system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">                <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"learn about Linux file IO\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="Pwnalbe-kr-C1-fd-WP"><a href="#Pwnalbe-kr-C1-fd-WP" class="headerlink" title="Pwnalbe.kr C1.fd WP"></a>Pwnalbe.kr C1.fd WP</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">char</span> buf[<span class="number">32</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[], <span class="keyword">char</span>* envp[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"pass argv[1] a number\n"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> fd = atoi( argv[<span class="number">1</span>] ) - <span class="number">0x1234</span>;</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">        len = <span class="built_in">read</span>(fd, buf, <span class="number">32</span>);</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(<span class="string">"LETMEWIN\n"</span>, buf))&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"good job :)\n"</span>);</span><br><span class="line">                system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">                <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"learn about Linux file IO\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>只要让fd = 0 就可以把flag打印到标准输出了。</p>
 <h5 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./fd 4660</span></span><br><span class="line">LETMEWIN</span><br></pre></td></tr></table></figure>
@@ -435,7 +435,7 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-09T17:46:57+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-09T17:50:17+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2020年4月9日</p>
@@ -446,6 +446,9 @@
       
         
           
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/pwnable-kr/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>pwnable.kr</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/File-Describor/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>File Describor</p></a></div>
+
 
         
       
@@ -462,7 +465,7 @@
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/04/09/Pwnable%20fd/&title=Pwnable fd - 192's blog&summary="
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/04/09/Pwnable%20fd/&title=Pwnalbe.kr C1.fd WP - 192's blog&summary="
           
           >
           
@@ -474,7 +477,7 @@
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2020/04/09/Pwnable%20fd/&title=Pwnable fd - 192's blog&summary="
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2020/04/09/Pwnable%20fd/&title=Pwnalbe.kr C1.fd WP - 192's blog&summary="
           
           >
           
@@ -486,7 +489,7 @@
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/04/09/Pwnable%20fd/&title=Pwnable fd - 192's blog&summary="
+          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/04/09/Pwnable%20fd/&title=Pwnalbe.kr C1.fd WP - 192's blog&summary="
           
           >
           
@@ -510,12 +513,12 @@
         
           <div class="prev-next">
             
-            
-              <a class='next' href='/2020/04/09/pyenv%E7%9B%B8%E5%85%B3%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/'>
-                <p class='title'>pyenv相关安装问题<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+              <a class='prev' href='/2020/04/09/pyenv%E7%9B%B8%E5%85%B3%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/'>
+                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>pyenv相关安装问题</p>
                 <p class='content'>pyenv相关安装问题1. pyenv install 下载慢1. 代理命令行可以用proxychains-ng
 2.  ~/.pyenv/cache将要安装的版本的.gz包从官网下载之后放进~...</p>
               </a>
+            
             
           </div>
         
@@ -542,7 +545,7 @@
 
   <script>
     window.subData = {
-      title: 'Pwnable fd',
+      title: 'Pwnalbe.kr C1.fd WP',
       tools: true
     }
   </script>
