@@ -16,12 +16,20 @@
 
   <!-- 页面元数据 -->
   
-    <title>Pwnalbe.kr C1.fd WP - 192&#39;s blog</title>
+    <title>Pwntools的一些坑 - 192&#39;s blog</title>
   
-    <meta name="keywords" content="pwnable.kr,fd">
+    <meta name="keywords" content="Pwntools,_curses,编码">
   
   
-    <meta name="description" content="Pwnalbe.kr C1.fd WP">
+    <meta name="description" content="最近刚开始学习pwn，因为看到有python3版本的pwntools。就安了一下，记录一下目前遇到的坑。
+
+
+_curses moudle not found
+
+TypeError：can only concatenate str
+
+
+">
   
 
   <!-- feed -->
@@ -366,8 +374,8 @@
         
   
     <h1 class="title">
-      <a href="/2020/04/09/Pwnable%20fd/">
-        Pwnalbe.kr C1.fd WP
+      <a href="/2020/04/13/Pwntools%20%E4%B8%80%E4%BA%9B%E5%9D%91/">
+        Pwntools的一些坑
       </a>
     </h1>
   
@@ -406,7 +414,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2020年4月9日</p>
+    <p>发布于：2020年4月13日</p>
   </a>
 </div>
 
@@ -428,18 +436,32 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h1 id="Pwnalbe-kr-C1-fd-WP"><a href="#Pwnalbe-kr-C1-fd-WP" class="headerlink" title="Pwnalbe.kr C1.fd WP"></a>Pwnalbe.kr C1.fd WP</h1><a id="more"></a>
+          <p>最近刚开始学习pwn，因为看到有python3版本的pwntools。就安了一下，记录一下目前遇到的坑。</p>
+<blockquote>
+<ol>
+<li><p>_curses moudle not found</p>
+</li>
+<li><p>TypeError：can only concatenate str</p>
+</li>
+</ol>
+</blockquote>
+<a id="more"></a>
 
+<h1 id="一、-curses"><a href="#一、-curses" class="headerlink" title="一、_curses"></a>一、_curses</h1><p>搜索了很多，都是windows下python缺少_curses库的，显然wsl无法用这个方法解决。最后终于找到一个解决方案，链接如下</p>
+<blockquote>
+<p><a href="https://my.oschina.net/leejun2005/blog/167567" target="_blank" rel="noopener">https://my.oschina.net/leejun2005/blog/167567</a></p>
+</blockquote>
+<h3 id="针对linux的方案："><a href="#针对linux的方案：" class="headerlink" title="针对linux的方案："></a>针对linux的方案：</h3><ol>
+<li><p>sudo pip install curses-2048</p>
+</li>
+<li><p>动态链接库(_curses_panel.so<br>_curses.so)的位置不对或者没有创建动态链接库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">find / -iname <span class="string">"_curses*.so"</span> 2&gt;/dev/null</span><br><span class="line">/usr/lib64/python2.6/lib-dynload/_curses.so</span><br><span class="line">/usr/lib64/python2.6/lib-dynload/_curses_panel.so</span><br><span class="line"></span><br><span class="line">find / 2&gt;/dev/null | grep <span class="string">'python2.7/lib-dynload'</span>|head -2 </span><br><span class="line">/opt/soft/python-2.7.11/lib/python2.7/lib-dynload</span><br><span class="line">/opt/soft/python-2.7.11/lib/python2.7/lib-dynload/math.so</span><br><span class="line"></span><br><span class="line">cp /usr/lib64/python2.6/lib-dynload/_curses*.so /usr/<span class="built_in">local</span>/lib/python2.7/lib-dynload/</span><br><span class="line"></span><br><span class="line">find / -iname <span class="string">"_curses*.so"</span> 2&gt;/dev/null</span><br><span class="line">/usr/lib64/python2.6/lib-dynload/_curses_panel.so</span><br><span class="line">/usr/lib64/python2.6/lib-dynload/_curses.so</span><br><span class="line">/usr/<span class="built_in">local</span>/lib/python2.7/lib-dynload/_curses_panel.so</span><br><span class="line">/usr/<span class="built_in">local</span>/lib/python2.7/lib-dynload/_curses.so</span><br></pre></td></tr></table></figure>
 
-
-
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">char</span> buf[<span class="number">32</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[], <span class="keyword">char</span>* envp[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"pass argv[1] a number\n"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> fd = atoi( argv[<span class="number">1</span>] ) - <span class="number">0x1234</span>;</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">        len = <span class="built_in">read</span>(fd, buf, <span class="number">32</span>);</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(<span class="string">"LETMEWIN\n"</span>, buf))&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"good job :)\n"</span>);</span><br><span class="line">                system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">                <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"learn about Linux file IO\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>只要让fd = 0 就可以把flag打印到标准输出了。</p>
-<h5 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./fd 4660</span></span><br><span class="line">LETMEWIN</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2020/04/09/4ZNxbSCIufmdyV9.png" alt="image-20200409172141326"></p>
+<p>这样就能让python找到相应的so文件。</p>
+</li>
+</ol>
+<h1 id="二、TypeError"><a href="#二、TypeError" class="headerlink" title="二、TypeError"></a>二、TypeError</h1><p>查了好久发现在pwntools github的issue中有一个解答。</p>
+<p>对所有要 xx.send()的字符串 要用<code>&#39;latin-1&#39;</code>进行编码。将其变成bytes类型后进行拼接。</p>
 
           
             <br>
@@ -467,7 +489,7 @@
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/pwnable-kr/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>pwnable.kr</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/fd/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>fd</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Pwntools/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Pwntools</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/curses/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>_curses</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E7%BC%96%E7%A0%81/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>编码</p></a></div>
 
 
         
@@ -485,7 +507,15 @@
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/04/09/Pwnable%20fd/&title=Pwnalbe.kr C1.fd WP - 192's blog&summary=Pwnalbe.kr C1.fd WP"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/04/13/Pwntools%20%E4%B8%80%E4%BA%9B%E5%9D%91/&title=Pwntools的一些坑 - 192's blog&summary=最近刚开始学习pwn，因为看到有python3版本的pwntools。就安了一下，记录一下目前遇到的坑。
+
+
+_curses moudle not found
+
+TypeError：can only concatenate str
+
+
+"
           
           >
           
@@ -497,7 +527,15 @@
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2020/04/09/Pwnable%20fd/&title=Pwnalbe.kr C1.fd WP - 192's blog&summary=Pwnalbe.kr C1.fd WP"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2020/04/13/Pwntools%20%E4%B8%80%E4%BA%9B%E5%9D%91/&title=Pwntools的一些坑 - 192's blog&summary=最近刚开始学习pwn，因为看到有python3版本的pwntools。就安了一下，记录一下目前遇到的坑。
+
+
+_curses moudle not found
+
+TypeError：can only concatenate str
+
+
+"
           
           >
           
@@ -509,7 +547,15 @@
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/04/09/Pwnable%20fd/&title=Pwnalbe.kr C1.fd WP - 192's blog&summary=Pwnalbe.kr C1.fd WP"
+          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/04/13/Pwntools%20%E4%B8%80%E4%BA%9B%E5%9D%91/&title=Pwntools的一些坑 - 192's blog&summary=最近刚开始学习pwn，因为看到有python3版本的pwntools。就安了一下，记录一下目前遇到的坑。
+
+
+_curses moudle not found
+
+TypeError：can only concatenate str
+
+
+"
           
           >
           
@@ -533,20 +579,18 @@
         
           <div class="prev-next">
             
-              <a class='prev' href='/2020/04/09/Pwnable%202/'>
-                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Pwnalbe.kr C2.collision WP</p>
-                <p class='content'>Pwnalbe.kr C2.collision WP
-
-
-
-12345678910111213141516171819202122232425262728293031#include &lt;s...</p>
-              </a>
             
-            
-              <a class='next' href='/2020/04/09/pyenv%E7%9B%B8%E5%85%B3%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/'>
-                <p class='title'>Pyenv相关安装问题<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-                <p class='content'>pyenv相关安装问题1. pyenv install 下载慢1. 代理命令行可以用proxychains-ng
-2.  ~/.pyenv/cache将要安装的版本的.gz包从官网下载之后放进~...</p>
+              <a class='next' href='/2020/04/13/ret2win/'>
+                <p class='title'>ROPEmporium ret2win<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+                <p class='content'>ret2win整个过程遇到了许多的坑，系统是ubuntu 18.04.
+
+
+
+
+题目
+https://ropemporium.com/challenge/ret2win.html
+
+checks...</p>
               </a>
             
           </div>
@@ -574,7 +618,7 @@
 
   <script>
     window.subData = {
-      title: 'Pwnalbe.kr C1.fd WP',
+      title: 'Pwntools的一些坑',
       tools: true
     }
   </script>
@@ -600,7 +644,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#payload"><span class="toc-text">payload</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#针对linux的方案："><span class="toc-text">针对linux的方案：</span></a></li></ol>
     </div>
   </section>
 
