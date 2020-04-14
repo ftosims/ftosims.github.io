@@ -666,7 +666,7 @@
     })
     .then(function (data) {
       var hitokoto = document.getElementById('hitokoto');
-      hitokoto.innerText = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + data.hitokoto;
+      hitokoto.innerText = '\xa0\xa0' + data.hitokoto;
       var hitofrom = document.getElementById('hitofrom');
       hitofrom.innerText = "——" + data.from + '\xa0'; 
     })
