@@ -501,7 +501,7 @@ TypeError：can only concatenate str
 </blockquote>
 <a id="more"></a>
 
-<h1 id="一、-curses"><a href="#一、-curses" class="headerlink" title="一、_curses"></a>一、_curses</h1><p>搜索了很多，都是windows下python缺少_curses库的，显然wsl无法用这个方法解决。最后终于找到一个解决方案，链接如下</p>
+<h2 id="一、-curses"><a href="#一、-curses" class="headerlink" title="一、_curses"></a>一、_curses</h2><p>搜索了很多，都是windows下python缺少_curses库的，显然wsl无法用这个方法解决。最后终于找到一个解决方案，链接如下</p>
 <blockquote>
 <p><a href="https://my.oschina.net/leejun2005/blog/167567" target="_blank" rel="noopener">https://my.oschina.net/leejun2005/blog/167567</a></p>
 </blockquote>
@@ -514,8 +514,11 @@ TypeError：can only concatenate str
 <p>这样就能让python找到相应的so文件。</p>
 </li>
 </ol>
-<h1 id="二、TypeError"><a href="#二、TypeError" class="headerlink" title="二、TypeError"></a>二、TypeError</h1><p>查了好久发现在pwntools github的issue中有一个解答。</p>
+<h2 id="二、TypeError"><a href="#二、TypeError" class="headerlink" title="二、TypeError"></a>二、TypeError</h2><p>python3里<strong>bytes</strong>类型和<strong>str</strong>类型是两个不同的类型，而不是像py2里面作为同一个类型的两个名字。因此在诸如<code>”A“ * N + p64(Addr)</code>这种形势的payload构造时，会出现问题。</p>
+<p>查了好久发现在pwntools github的issue中有一个解答。</p>
 <p>对所有要 xx.send()的字符串 要用<code>&#39;latin-1&#39;</code>进行编码。将其变成bytes类型后进行拼接。</p>
+<p>最后的结果就是</p>
+<p><code>bytes(&quot;A&quot;, &#39;latin-1&#39;) * N + p64(Addr)</code></p>
 
           
             <br>
@@ -533,7 +536,7 @@ TypeError：can only concatenate str
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-14T19:21:13+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-14T19:28:03+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2020年4月14日</p>
@@ -640,6 +643,8 @@ TypeError：can only concatenate str
                 <p class='title'>这里是一个置顶帖w<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
                 <p class='content'>
 
+
+
 TO-DO
             Ubuntu 18.04下pwn相关细节
             
@@ -647,7 +652,7 @@ TO-DO
 
  依旧有一些问题没有得到解决 
               
-          ...</p>
+        ...</p>
               </a>
             
           </div>
@@ -701,7 +706,7 @@ TO-DO
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#针对linux的方案："><span class="toc-text">针对linux的方案：</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、-curses"><span class="toc-text">一、_curses</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#针对linux的方案："><span class="toc-text">针对linux的方案：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、TypeError"><span class="toc-text">二、TypeError</span></a></li></ol>
     </div>
   </section>
 

